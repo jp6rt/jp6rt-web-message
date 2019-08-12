@@ -2,6 +2,11 @@ package main
 
 import "github.com/aws/aws-lambda-go/lambda"
 
+type Message struct {
+	CreatedAt string
+	Message   string
+}
+
 type response struct {
 	Message string `json:"message"`
 }

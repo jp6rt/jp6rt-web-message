@@ -50,4 +50,7 @@ resources:
           - AttributeName: message
             KeyType: HASH
           - AttributeName: createdAt
-            KeyType: HASH
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
