@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Message service SNS template
+
+Resources:
+  MessageTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: Jp6rt Web Message
+  EmailSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref MessageTopic
+      Protocol: email
+      Endpoint: jp01r7@gmail.com
+      Region: ap-southeast-1
+  SMSSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref MessageTopic
+      Protocol: sms
+      Endpoint: +639452743660
+      Region: ap-southeast-1
