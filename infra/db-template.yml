@@ -1,12 +1,17 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   Dynamo DB table for messages
+Parameters:
+  ApplicationName:
+    Type: String
+    Default: jp6rt-web
+    Description: Application Name Reference
 
 Resources:
   MessagesTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: jp6rt-web-messages
+      TableName: !Sub ${ApplicationName}-messages
       AttributeDefinitions:
         - AttributeName: message
           AttributeType: S
@@ -20,3 +25,5 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 10
         WriteCapacityUnits: 10
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
