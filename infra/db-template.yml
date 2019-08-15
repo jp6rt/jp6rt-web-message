@@ -27,3 +27,14 @@ Resources:
         WriteCapacityUnits: 10
       StreamSpecification:
         StreamViewType: NEW_IMAGE
+Outputs:
+  TableARN:
+    Description: Table ARN
+    Value: !GetAtt MessagesTable.Arn
+    Export:
+      Name: !Sub ${ApplicationName}-messages-table
+  TableStreamARN:
+    Description: Table Stream ARN
+    Value: !GetAtt MessagesTable.StreamArn
+    Export:
+      Name: !Sub ${ApplicationName}-messages-table-stream
