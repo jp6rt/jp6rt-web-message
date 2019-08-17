@@ -1,0 +1,37 @@
+Resources:
+  MessagesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:provider.stage}-${self:service}
+      AttributeDefinitions:
+        - AttributeName: message
+          AttributeType: S
+        - AttributeName: createdAt
+          AttributeType: S
+      KeySchema:
+        - AttributeName: message
+          KeyType: HASH
+        - AttributeName: createdAt
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 10
+        WriteCapacityUnits: 10
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
+Outputs:
+  TableARN:
+    Description: Table ARN
+    Value: 
+      'Fn::GetAtt': 
+        - MessagesTable
+        - Arn
+    Export:
+      Name: ${self:provider.stage}-${self:service}-table-arn
+  TableStreamARN:
+    Description: Table Stream ARN
+    Value: 
+      'Fn::GetAtt': 
+        - MessagesTable
+        - StreamArn
+    Export:
+      Name: ${self:provider.stage}-${self:service}-table-stream-arn

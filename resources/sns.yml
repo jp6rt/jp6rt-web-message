@@ -1,0 +1,28 @@
+Resources:
+  MessageTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: ${self:provider.stage}-${self:service}-message-topic
+  EmailSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: 
+        'Ref': MessageTopic
+      Protocol: email
+      Endpoint: ${self:custom.emailEndpoint}
+      Region: ${self:provider.region}
+  SMSSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: 
+        'Ref': MessageTopic
+      Protocol: sms
+      Endpoint: ${self:custom.smsEndpoint}
+      Region: ${self:provider.region}
+Outputs:
+  TopicARN:
+    Description: Topic ARN
+    Value: 
+      'Ref': MessageTopic
+    Export:
+      Name: ${self:provider.stage}-${self:service}-message-topic-arn

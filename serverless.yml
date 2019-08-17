@@ -1,4 +1,4 @@
-service: portfolio-messages
+service: jp6rt-web-messages
 
 provider:
   name: aws
@@ -21,6 +21,10 @@ provider:
       Resource:
         - "Fn::GetAtt": [ MessagesTable, Arn ]
 
+custom:
+  emailEndpoint: jp017@gmail.com
+  smsEndpoint: +639452743660
+
 package:
  exclude:
    - ./**
@@ -32,25 +36,9 @@ functions:
     handler: bin/create
     events:
       - http:
-          path: messages/create
+          path: messages
           method: post
 
 resources:
-  Resources:
-    MessagesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: portfolio-messages-${self:provider.stage}
-        AttributeDefinitions:
-          - AttributeName: message
-            AttributeType: S
-          - AttributeName: createdAt
-            AttributeType: S
-        KeySchema:
-          - AttributeName: message
-            KeyType: HASH
-          - AttributeName: createdAt
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 10
-          WriteCapacityUnits: 10
+  - ${file(resources/dynamodb.yml)}
+  - ${file(resources/sns.yml)}
