@@ -5,6 +5,7 @@
   digest = "1:d5039f72505274cddd25fef3b4790e7d985eaf063a0c7df1363ed6292ddc30fb"
   name = "github.com/aws/aws-lambda-go"
   packages = [
+    "events",
     "lambda",
     "lambda/messages",
     "lambdacontext",
@@ -16,6 +17,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/aws/aws-lambda-go/lambda"]
+  input-imports = [
+    "github.com/aws/aws-lambda-go/events",
+    "github.com/aws/aws-lambda-go/lambda",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

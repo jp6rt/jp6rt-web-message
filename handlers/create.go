@@ -1,15 +1,30 @@
 package main
 
-import "github.com/aws/aws-lambda-go/lambda"
+import (
+	"encoding/json"
 
-type response struct {
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+)
+
+// Response ..
+type Response struct {
 	Message string `json:"message"`
+	Code    int    `json:"code"`
 }
 
-func handler() (response, error) {
-	return response{
-		Message: "test message",
-	}, nil
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	x := Response{
+		Message: "ok",
+		Code:    200,
+	}
+	response, err := json.Marshal(x)
+
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: string(response), StatusCode: 200}, nil
+	}
+
+	return events.APIGatewayProxyResponse{Body: string(response), StatusCode: 500}, nil
 }
 
 func main() {
