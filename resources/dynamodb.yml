@@ -7,7 +7,7 @@ Resources:
         - AttributeName: id
           AttributeType: S
         - AttributeName: createdAt
-          AttributeType: S
+          AttributeType: N
       KeySchema:
         - AttributeName: id
           KeyType: HASH
