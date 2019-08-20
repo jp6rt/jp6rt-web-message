@@ -22,7 +22,7 @@ provider:
         - "Fn::GetAtt": [ MessagesTable, Arn ]
 
 custom:
-  emailEndpoint: jp017@gmail.com
+  emailEndpoint: jp01r7@gmail.com
   smsEndpoint: +639452743660
 
 package:

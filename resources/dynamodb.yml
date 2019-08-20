@@ -4,12 +4,12 @@ Resources:
     Properties:
       TableName: ${self:provider.stage}-${self:service}
       AttributeDefinitions:
-        - AttributeName: message
+        - AttributeName: id
           AttributeType: S
         - AttributeName: createdAt
           AttributeType: S
       KeySchema:
-        - AttributeName: message
+        - AttributeName: id
           KeyType: HASH
         - AttributeName: createdAt
           KeyType: RANGE
