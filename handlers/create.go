@@ -44,7 +44,7 @@ func init() {
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Println("Handler")
 
-	uuid := uuid.Must(uuid.NewV4()).String()
+	uuid := uuid.Must(uuid.NewV1(), nil).String()
 	tableName := aws.String("dev-jp6rt-web-messages")
 	now := time.Now()
 
