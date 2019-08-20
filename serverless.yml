@@ -20,6 +20,11 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - "Fn::GetAtt": [ MessagesTable, Arn ]
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource:
+        - 'Ref': MessageTopic 
 
 custom:
   emailEndpoint: jp01r7@gmail.com
@@ -38,6 +43,12 @@ functions:
       - http:
           path: messages
           method: post
+  notify:
+    handler: bin/notify
+    events:
+      - stream: 
+          type: dynamodb
+          arn: "Fn::GetAtt": [ MessagesTable, StreamArn ]
 
 resources:
   - ${file(resources/dynamodb.yml)}
