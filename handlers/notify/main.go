@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-//...
+// Handler ...
 func Handler(ctx context.Context, e events.DynamoDBEvent) {
 
 	for _, record := range e.Records {
