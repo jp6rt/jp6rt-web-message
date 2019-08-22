@@ -48,7 +48,10 @@ functions:
     events:
       - stream: 
           type: dynamodb
-          arn: "Fn::GetAtt": [ MessagesTable, StreamArn ]
+          arn: 
+            "Fn::GetAtt": 
+              - MessagesTable
+              - StreamArn
 
 resources:
   - ${file(resources/dynamodb.yml)}
