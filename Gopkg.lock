@@ -51,6 +51,7 @@
     "private/protocol/xml/xmlutil",
     "service/dynamodb",
     "service/dynamodb/dynamodbattribute",
+    "service/sns",
     "service/sts",
     "service/sts/stsiface",
   ]
@@ -83,6 +84,7 @@
     "github.com/aws/aws-sdk-go/aws/session",
     "github.com/aws/aws-sdk-go/service/dynamodb",
     "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute",
+    "github.com/aws/aws-sdk-go/service/sns",
     "github.com/satori/go.uuid",
   ]
   solver-name = "gps-cdcl"
