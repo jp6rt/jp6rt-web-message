@@ -22,9 +22,8 @@ provider:
         - "Fn::GetAtt": [ MessagesTable, Arn ]
     - Effect: Allow
       Action:
-        - sns:Publish
-      Resource:
-        - 'Ref': MessageTopic 
+        - SNS:Publish
+      Resource: "*"
 
 custom:
   emailEndpoint: jp01r7@gmail.com
@@ -46,10 +45,10 @@ functions:
   notify:
     handler: bin/notify
     events:
-      - stream: 
+      - stream:
           type: dynamodb
-          arn: 
-            "Fn::GetAtt": 
+          arn:
+            "Fn::GetAtt":
               - MessagesTable
               - StreamArn
 
