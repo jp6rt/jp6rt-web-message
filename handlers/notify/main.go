@@ -17,7 +17,7 @@ var svc *sns.SNS
 
 func init() {
 	fmt.Println("init")
-	region := os.Getenv("AWS_REGION")
+	region := "ap-southeast-1"
 	session, err := session.NewSession(&aws.Config{
 		Region: &region,
 	})
