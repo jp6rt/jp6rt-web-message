@@ -17,7 +17,7 @@ var svc *sns.SNS
 
 func init() {
 	fmt.Println("init")
-	region := "ap-southeast-1"
+	region := os.Getenv("region")
 	session, err := session.NewSession(&aws.Config{
 		Region: &region,
 	})
@@ -44,7 +44,7 @@ func Handler(ctx context.Context, e events.DynamoDBEvent) {
 		}
 	}
 
-	topicARN := "arn:aws:sns:ap-southeast-1:230335894752:jp6rt-web-messages-dev-MessageTopic-Y6BDS59ZG771"
+	topicARN := os.Getenv("messageTopicARN")
 
 	result, err := svc.Publish(&sns.PublishInput{
 		Message:  aws.String(message),

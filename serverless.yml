@@ -3,7 +3,7 @@ service: jp6rt-web-messages
 provider:
   name: aws
   runtime: go1.x
-  stage: dev
+  stage: ${opt:stage, 'dev'}
   region: ap-southeast-1
   versionFunctions: false
   tracing:
@@ -24,6 +24,10 @@ provider:
       Action:
         - SNS:Publish
       Resource: "*"
+  environment:
+    region: ap-southeast-1
+    messageTopicARN:
+      "Fn::ImportValue": ${self:provider.stage}-${self:service}-message-topic-arn
 
 custom:
   emailEndpoint: jp01r7@gmail.com
