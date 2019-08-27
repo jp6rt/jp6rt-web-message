@@ -28,6 +28,7 @@ provider:
     region: ap-southeast-1
     messageTopicARN:
       "Fn::ImportValue": ${self:provider.stage}-${self:service}-message-topic-arn
+    messageTable: ${self:provider.stage}-${self:service}
 
 custom:
   emailEndpoint: jp01r7@gmail.com

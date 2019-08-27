@@ -26,7 +26,7 @@ var db *dynamodb.DynamoDB
 
 func init() {
 	fmt.Println("init")
-	region := os.Getenv("AWS_REGION")
+	region := os.Getenv("region")
 	session, err := session.NewSession(&aws.Config{
 		Region: &region,
 	})
@@ -45,7 +45,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	fmt.Println("Handler")
 
 	uuid := uuid.Must(uuid.NewV1(), nil).String()
-	tableName := aws.String("dev-jp6rt-web-messages")
+	tableName := aws.String(os.Getenv("messageTable"))
 	now := time.Now()
 
 	message := &Message{
