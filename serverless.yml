@@ -1,4 +1,7 @@
-service: jp6rt-web-messages
+service: jp6rt-w3b-service
+
+custom:
+  stack: ${opt:stage, 'dev'}-jp6rt-w3b
 
 provider:
   name: aws
@@ -19,7 +22,7 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - "Fn::GetAtt": [ MessagesTable, Arn ]
+        - "Fn::ImportValue": ${self:custom.stack}-messages-table-arn
     - Effect: Allow
       Action:
         - SNS:Publish
@@ -27,12 +30,8 @@ provider:
   environment:
     region: ap-southeast-1
     messageTopicARN:
-      "Fn::ImportValue": ${self:provider.stage}-${self:service}-message-topic-arn
-    messageTable: ${self:provider.stage}-${self:service}
-
-custom:
-  emailEndpoint: jp01r7@gmail.com
-  smsEndpoint: +639452743660
+      "Fn::ImportValue": ${self:custom.stack}-message-topic-arn
+    messageTable: ${self:custom.stack}-messages
 
 package:
  exclude:
@@ -53,10 +52,4 @@ functions:
       - stream:
           type: dynamodb
           arn:
-            "Fn::GetAtt":
-              - MessagesTable
-              - StreamArn
-
-resources:
-  - ${file(resources/dynamodb.yml)}
-  - ${file(resources/sns.yml)}
+            "Fn::ImportValue": ${self:custom.stack}-messages-table-stream-arn

@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Messages DB and Notification template
+Parameters:
+  Email:
+    Type: String
+    Default: jp01r7@gmail.com
+    Description: Email endpoint parameter
+  SMS:
+    Type: String
+    Default: +639452743660
+    Description: SMS endpoint parameter
+
+Resources:
+  MessagesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${AWS::StackName}-messages
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: createdAt
+          AttributeType: N
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: createdAt
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 10
+        WriteCapacityUnits: 10
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+  MessageTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: !Sub ${AWS::StackName}-message-topic
+  EmailSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref MessageTopic
+      Protocol: email
+      Endpoint: !Ref Email
+      Region: !Ref AWS::Region
+  SMSSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref MessageTopic
+      Protocol: sms
+      Endpoint: !Ref SMS
+      Region: !Ref AWS::Region
+Outputs:
+  TableARN:
+    Description: Messages Table ARN
+    Value: !GetAtt MessagesTable.Arn
+    Export:
+      Name: !Sub ${AWS::StackName}-messages-table-arn
+  TableStreamARN:
+    Description: Messages Table Stream ARN
+    Value: !GetAtt MessagesTable.StreamArn
+    Export:
+      Name: !Sub ${AWS::StackName}-messages-table-stream-arn
+  TopicARN:
+    Description: Message Topic ARN
+    Value: !Ref MessageTopic
+    Export:
+      Name: !Sub ${AWS::StackName}-message-topic-arn
