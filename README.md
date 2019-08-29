@@ -18,7 +18,7 @@ Templates can be found on the [infra folder](./infra)
 ## deploy templates
 
 ### Deploy dev stack
-> aws cloudformation deploy --stack-name dev-jp6rt-w3b --template-file ./infra/resources-template.yml
+> aws cloudformation deploy --stack-name dev-jp6rt-web --template-file ./infra/resources-template.yml
 
 ### Deploy production stack
-> aws cloudformation deploy --stack-name prod-jp6rt-w3b --template-file ./infra/resources-template.yml
+> aws cloudformation deploy --stack-name prod-jp6rt-web --template-file ./infra/resources-template.yml

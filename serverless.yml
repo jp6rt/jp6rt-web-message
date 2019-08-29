@@ -1,7 +1,7 @@
-service: jp6rt-w3b-service
+service: jp6rt-web-messages
 
 custom:
-  stack: ${opt:stage, 'dev'}-jp6rt-w3b
+  stack: ${opt:stage, 'dev'}-jp6rt-web
 
 provider:
   name: aws
@@ -14,13 +14,7 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
         - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
       Resource:
         - "Fn::ImportValue": ${self:custom.stack}-messages-table-arn
     - Effect: Allow
