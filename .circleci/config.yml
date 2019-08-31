@@ -14,7 +14,7 @@ jobs:
           name: Build notify handler
           command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/notify handlers/notify/main.go
       - save_cache:
-          key: build-cache-{{ .BuildNum }}
+          key: build-cache-${CIRCLE_TAG}
           paths:
             - ./bin
   deploy_resources:
@@ -52,7 +52,7 @@ jobs:
       - checkout
       - restore_cache:
           keys: 
-            - build-cache-{{ .BuildNum }}
+            - build-cache-${CIRCLE_TAG}
       - run:
           name: Install serverless
           command: sudo npm install serverless -g
