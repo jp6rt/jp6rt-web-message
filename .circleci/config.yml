@@ -43,6 +43,18 @@ jobs:
           command: |
             export PATH=~/.local/bin:$PATH
             aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ./infra/resources-template.yml
+  deploy_service:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: Install serverless
+          command: npm install serverless -g
+      - run:
+          name: Deploy service
+          command: sls deploy --stage prod
 
 workflows:
   version: 2.1
@@ -50,3 +62,6 @@ workflows:
     jobs:
       - build
       - deploy_resources
+      - deploy_service:
+          requires:
+            - build
