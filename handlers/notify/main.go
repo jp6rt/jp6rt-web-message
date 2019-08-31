@@ -35,8 +35,6 @@ func init() {
 func Handler(ctx context.Context, e events.DynamoDBEvent) {
 	var message string
 	for _, record := range e.Records {
-
-		// Print new values for attributes of type String
 		for name, value := range record.Change.NewImage {
 			if value.DataType() == events.DataTypeString && name == "message" {
 				message = value.String()
