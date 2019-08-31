@@ -22,7 +22,7 @@ jobs:
     docker:
       - image: circleci/python:3.7.2
     environment:
-      STACK_NAME: prod-jp6rt-web
+      STACK_NAME: "prod-jp6rt-web"
     steps:
       - checkout
       - run:
@@ -42,7 +42,7 @@ jobs:
         command: 
           - >-
             aws cloudformation deploy 
-            --stack-name $STACK_NAME
+            --stack-name ${STACK_NAME}
             --template-file ./infra/resources-template.yml
 
 workflows:
