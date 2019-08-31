@@ -42,7 +42,8 @@ jobs:
           name: Deploy resources
           command: |
             export PATH=~/.local/bin:$PATH
-            aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ./infra/resources-template.yml
+            chmod +x ./deploy.sh
+            ./deploy.sh
   deploy_service:
     working_directory: ~/project
     docker:
