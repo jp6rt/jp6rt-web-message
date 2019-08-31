@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/jp6rt/jp6rt-web-message.svg?style=svg)](https://circleci.com/gh/jp6rt/jp6rt-web-message)
+
 # jp6rt-web-message
 Service for creating message record and forwarding it to SMS and email
 
