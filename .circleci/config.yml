@@ -42,7 +42,7 @@ jobs:
         command: 
           - >-
             aws cloudformation deploy 
-            --stack-name ${STACK_NAME} 
+            --stack-name $STACK_NAME
             --template-file ./infra/resources-template.yml
 
 workflows:
