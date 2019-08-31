@@ -1,10 +1,5 @@
 version: 2.1
 
-commands:
-  build_executables:
-    steps:
-      
-
 jobs:
   build:
     working_directory: ~/project
