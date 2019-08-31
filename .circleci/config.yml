@@ -40,7 +40,9 @@ jobs:
             pip3 install --upgrade --user awscli
       - run:
           name: Deploy resources
-          command: aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ./infra/resources-template.yml
+          command: |
+            export PATH=~/.local/bin:$PATH
+            aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ./infra/resources-template.yml
 
 workflows:
   version: 2.1
