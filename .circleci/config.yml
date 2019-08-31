@@ -1,0 +1,45 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: circleci/golang:1.12.9
+    steps:
+      - checkout
+      - run:
+          name: Build create handler
+          command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/create handlers/create/main.go
+      - run:
+          name: Build notify handler
+          command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/notify handlers/notify/main.go
+      - save_cache:
+          key: build-cache-{{ .BuildNum }}
+          paths:
+            - ./bin
+  deploy_resources:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.7.2
+    steps:
+      - checkout
+      - run:
+          name: Install pip
+          command: |
+            curl -O https://bootstrap.pypa.io/get-pip.py
+            python get-pip.py --user
+            pip3 --version
+      - run:
+          name: Install aws cli
+          command: |
+          pip3 install awscli --upgrade --user
+          aws --version
+          pip3 install --upgrade --user awscli
+
+workflows:
+  version: 2.1
+    deploy:
+      jobs:
+        - build
+        - deploy_resources
+        - deploy_service
