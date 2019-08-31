@@ -49,6 +49,9 @@ jobs:
       - image: circleci/node:10.16.3
     steps:
       - checkout
+      - restore_cache:
+          keys: 
+            - build-cache-{{ .BuildNum }}
       - run:
           name: Install serverless
           command: sudo npm install serverless -g
