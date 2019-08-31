@@ -21,6 +21,8 @@ jobs:
     working_directory: ~/project
     docker:
       - image: circleci/python:3.7.2
+    environment:
+      STACK_NAME: prod-jp6rt-web
     steps:
       - checkout
       - run:
@@ -33,8 +35,14 @@ jobs:
           name: Install aws cli
           command: |
             pip3 install awscli --upgrade --user
+            export PATH=~/.local/bin:$PATH
             aws --version
             pip3 install --upgrade --user awscli
+        name: Deploy resources
+        command: |
+          aws cloudformation deploy \
+          --stack-name ${STACK_NAME} \
+          --template-file ./infra/resources-template.yml
 
 workflows:
   version: 2.1
