@@ -42,13 +42,13 @@ Resources:
       Protocol: email
       Endpoint: !Ref Email
       Region: !Ref AWS::Region
-  # SMSSubscription:
-  #  Type: AWS::SNS::Subscription
-  #  Properties:
-  #    TopicArn: !Ref MessageTopic
-  #    Protocol: sms
-  #    Endpoint: !Ref SMS
-  #    Region: !Ref AWS::Region
+  SMSSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref MessageTopic
+      Protocol: sms
+      Endpoint: !Ref SMS
+      Region: !Ref AWS::Region
 Outputs:
   TableARN:
     Description: Messages Table ARN
