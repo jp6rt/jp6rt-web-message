@@ -19,7 +19,7 @@ import (
 type Message struct {
 	ID        string `json:"id"`
 	Message   string `json:"message"`
-	CreatedAt int64  `json:"createdAt"`
+	CreatedAt string `json:"createdAt"`
 }
 
 var db *dynamodb.DynamoDB
@@ -50,7 +50,12 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	message := &Message{
 		ID:        uuid,
-		CreatedAt: now.Unix(),
+		CreatedAt: now.String(),
+	}
+
+	headers := map[string]string{
+		"Access-Control-Allow-Origin": "*",
+		"Content-Type":                "application/json",
 	}
 
 	json.Unmarshal([]byte(request.Body), message)
@@ -66,6 +71,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	if err != nil {
 		fmt.Println("Error putting item")
 		return events.APIGatewayProxyResponse{
+			Headers:    headers,
 			Body:       err.Error(),
 			StatusCode: 500,
 		}, nil
@@ -73,6 +79,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	body, _ := json.Marshal(message)
 	return events.APIGatewayProxyResponse{
+		Headers:    headers,
 		Body:       string(body),
 		StatusCode: 200,
 	}, nil
