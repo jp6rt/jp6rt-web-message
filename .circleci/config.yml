@@ -3,12 +3,7 @@ version: 2.1
 commands:
   build_executables:
     steps:
-      - run:
-          name: Build create handler
-          command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/create handlers/create/main.go
-      - run:
-          name: Build notify handler
-          command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/notify handlers/notify/main.go
+      
 
 jobs:
   build:
@@ -17,8 +12,16 @@ jobs:
       - image: circleci/golang:1.12.9
     steps:
       - checkout
-      - build_executables
-
+      - run:
+          name: Build create handler
+          command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/create handlers/create/main.go
+      - run:
+          name: Build notify handler
+          command: GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/notify handlers/notify/main.go
+      - save_cache:
+          key: build-cache-{{ .Environment.CIRCLE_TAG }}
+          paths:
+            - ./bin
   deploy_resources:
     working_directory: ~/project
     docker:
@@ -50,10 +53,11 @@ jobs:
     working_directory: ~/project
     docker:
       - image: circleci/node:10.16.3
-      - image: circleci/golang:1.12.9
     steps:
       - checkout
-      - build_executables
+      - restore_cache:
+          keys: 
+            - build-cache-{{ .Environment.CIRCLE_TAG }}
       - run:
           name: Install serverless
           command: sudo npm install serverless -g
