@@ -51,7 +51,7 @@ jobs:
       - checkout
       - run:
           name: Install serverless
-          command: npm install serverless -g
+          command: sudo npm install serverless -g
       - run:
           name: Deploy service
           command: sls deploy --stage prod
@@ -60,8 +60,22 @@ workflows:
   version: 2.1
   deploy:
     jobs:
-      - build
-      - deploy_resources
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy_resources:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
       - deploy_service:
           requires:
             - build
+            - deploy_resources
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
