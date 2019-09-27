@@ -27,8 +27,8 @@ Resources:
         - AttributeName: createdAt
           KeyType: RANGE
       ProvisionedThroughput:
-        ReadCapacityUnits: 10
-        WriteCapacityUnits: 10
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_IMAGE
   MessageTopic:
