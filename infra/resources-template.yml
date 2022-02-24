@@ -4,7 +4,7 @@ Description: >-
 Parameters:
   Email:
     Type: String
-    Default: jp01r7@gmail.com
+    Default: resuentojac@gmail.com
     Description: Email endpoint parameter
   SMS:
     Type: String
